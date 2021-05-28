@@ -50,6 +50,12 @@ var pokemonTable = Vue.component(
 				default: 'Pokemon table',
 			},
 		},
+		methods: {
+			emitSort: function (name, direction) {
+				console.log('clicked emitSort', name, direction);
+				this.$emit('sort', {name, direction});
+			},
+		},
 		template: `
 		<table
 			class="pokemon-table"
@@ -64,8 +70,24 @@ var pokemonTable = Vue.component(
 				<tr>
 					<th
 						class="name-row"
-					>Name</th>
-					<th>Stamina</th>
+					>
+						<span>Name</span>
+						<button
+							@click = "emitSort('name', 'forward')"
+						>Up</button>
+						<button
+							@click = "emitSort('name', 'backward')"
+						>Down</button>
+					</th>
+					<th>
+						<span>Stamina</span>
+						<button
+							@click = "emitSort('stamina', 'forward')"
+						>Up</button>
+						<button
+							@click = "emitSort('stamina', 'backward')"
+						>Down</button>
+					</th>
 					<th>Attack</th>
 					<th>Defense</th>
 					<th>Stat Sum</th>
@@ -83,47 +105,56 @@ var pokemonTable = Vue.component(
 		`
 	}
 );
+var pokemonList = [
+	{
+		id: 25,
+		name: 'Pikachu',
+		stamina: 111,
+		attack: 112,
+		defense: 96,
+	},
+	{
+		id: 150,
+		name: 'Mewtwo',
+		stamina: 214,
+		attack: 300,
+		defense: 182,
+	},
+	{
+		id: 145,
+		name: 'Zapados',
+		stamina: 207,
+		attack: 253,
+		defense: 185,
+	},
+	{
+		id: 999,
+		name: 'Bob',
+		stamina: 999,
+		attack: 999,
+		defense: 999,
+	},
+];
 
 var app = new Vue({
 	el: '#app',
 	data: {
-		pokemonList: [
-			{
-				id: 25,
-				name: 'Pikachu',
-				stamina: 111,
-				attack: 112,
-				defense: 96,
-			},
-			{
-				id: 150,
-				name: 'Mewtwo',
-				stamina: 214,
-				attack: 300,
-				defense: 182,
-			},
-			{
-				id: 145,
-				name: 'Zapados',
-				stamina: 207,
-				attack: 253,
-				defense: 185,
-			},
-			{
-				id: 999,
-				name: 'Bob',
-				stamina: 999,
-				attack: 999,
-				defense: 999,
-			},
-		]
+		pokemonList: JSON.parse(JSON.stringify(pokemonList)),
+	},
+	methods: {
+		handleSortEvent: function (sortValues) {
+			var sortingMethod = tableSortingMethods[sortValues.name][sortValues.direction];
+			this.pokemonList.sort(sortingMethod);
+			console.log('OMG the parent is listening', arguments);
+		}
 	},
 	template: `
 	<div class="app">
-		<h1>Pokemon App!</h1>
+		<h1 style="padding-left: 20px;">Pokemon Stat App</h1>
 		<pokemon-table
 			:list="pokemonList"
-			title="Best Pokemon Ever"
+			title="Bob and the Pokemon"
+			@sort="handleSortEvent"
 		></pokemon-table>
 	</div>
 	`,
