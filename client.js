@@ -9,12 +9,24 @@ var pokemonTableRow = Vue.component(
 				required: true,
 			},
 		},
+		computed: {
+			statSum: function () {
+				return (
+					this.pokemon.stamina
+					+ this.pokemon.attack
+					+ this.pokemon.defense
+				);
+			}
+		},
 		template: `
 		<tr class="pokemon-table-row">
-			<td>{{pokemon.name}}</td>
+			<td
+				class="name-row"
+			>{{pokemon.name}}</td>
 			<td>{{pokemon.stamina}}</td>
 			<td>{{pokemon.attack}}</td>
 			<td>{{pokemon.defense}}</td>
+			<td>{{statSum}}</td>
 		</tr>
 		`
 	}
@@ -41,20 +53,22 @@ var pokemonTable = Vue.component(
 		template: `
 		<table
 			class="pokemon-table"
-			border="1"
 		>
 			<thead>
 				<tr>
 					<th
-						colspan="4"
+						colspan="5"
 						align="center"
 					>{{title}}</th>
 				</tr>
 				<tr>
-					<th>Name</th>
+					<th
+						class="name-row"
+					>Name</th>
 					<th>Stamina</th>
 					<th>Attack</th>
 					<th>Defense</th>
+					<th>Stat Sum</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -94,6 +108,13 @@ var app = new Vue({
 				stamina: 207,
 				attack: 253,
 				defense: 185,
+			},
+			{
+				id: 999,
+				name: 'Bob',
+				stamina: 999,
+				attack: 999,
+				defense: 999,
 			},
 		]
 	},
