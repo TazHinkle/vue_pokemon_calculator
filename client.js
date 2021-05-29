@@ -32,6 +32,40 @@ var pokemonTableRow = Vue.component(
 	}
 );
 
+var pokemonTableColumnHeader = Vue.component(
+	//convention for naming Vue components
+	//note line template and table row class name
+	'pokemon-table-column-header',
+	{
+		props: {
+			pokemon: {
+				type: Object,
+				required: true,
+			},
+		},
+		computed: {
+			statSum: function () {
+				return (
+					this.pokemon.stamina
+					+ this.pokemon.attack
+					+ this.pokemon.defense
+				);
+			}
+		},
+		template: `
+		<tr class="pokemon-table-row">
+			<td
+				class="name-row"
+			>{{pokemon.name}}</td>
+			<td>{{pokemon.stamina}}</td>
+			<td>{{pokemon.attack}}</td>
+			<td>{{pokemon.defense}}</td>
+			<td>{{statSum}}</td>
+		</tr>
+		`
+	}
+);
+
 var pokemonTable = Vue.component(
 	//convention for naming Vue components
 	//note line template and table row class name
