@@ -122,9 +122,27 @@ var pokemonTable = Vue.component(
 							@click = "emitSort('stamina', 'backward')"
 						>Down</button>
 					</th>
-					<th>Attack</th>
-					<th>Defense</th>
-					<th>Stat Sum</th>
+					<th>
+						<span>Attack</span>
+						<button
+							@click = "emitSort('attack', 'forward')"
+						>Up</button>
+						<button
+							@click = "emitSort('attack', 'backward')"
+						>Down</button>
+					</th>
+					<th>
+						<span>Defense</span>
+						<button
+							@click = "emitSort('defense', 'forward')"
+						>Up</button>
+						<button
+							@click = "emitSort('defense', 'backward')"
+						>Down</button>
+					</th>
+					<th>
+						<span>Stat Sum</span>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -179,7 +197,6 @@ var app = new Vue({
 		handleSortEvent: function (sortValues) {
 			var sortingMethod = tableSortingMethods[sortValues.name][sortValues.direction];
 			this.pokemonList.sort(sortingMethod);
-			console.log('OMG the parent is listening', arguments);
 		}
 	},
 	template: `
