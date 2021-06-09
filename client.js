@@ -201,10 +201,10 @@ var app = new Vue({
 	},
 	template: `
 	<div class="app">
-		<h1 style="padding-left: 20px;">Pokemon Stat App</h1>
+
 		<pokemon-table
 			:list="pokemonList"
-			title="Bob and the Pokemon"
+			title="Bob and the Pokemon: A Pokemon Stat App"
 			@sort="handleSortEvent"
 		></pokemon-table>
 	</div>
